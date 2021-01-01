@@ -3,6 +3,7 @@ import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../Components/Burger/Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 
+
 const AdditionalPrice = {
     salad: 0.4,
     cheese: 0.1,
@@ -18,20 +19,19 @@ class BurgerBuilder extends Component{
             meat: 0,
             bacon:0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        orderStatus: false
     }
 
-    // addIng = (type) =>{
-    //     const oldIng = this.state.ingredients[type];
-    //     const newIng = oldIng + 1;
-    //     const copyIng = {...this.state.ingredients};
-    //     copyIng[type] = newIng;
-    //     const addPrice = AdditionalPrice[type];
-    //     const oldPrice = this.state.totalPrice;
-    //     const newPrice = oldPrice + addPrice;
-    //     console.log(this.state.totalPrice);
-    //     this.setState({totalPrice: newPrice, ingredients: copyIng});
-    // }
+    updateOrderStatus (ingredients) {
+        const sum = Object.keys(ingredients)
+        .map(ing =>{
+            return ingredients[ing];
+        }).reduce((sum, el) => {
+            return sum + el;
+        }, 0);
+        this.setState({orderStatus: sum > 0});
+    }
 
     addIng = (type) =>{
         const oldIng = this.state.ingredients[type];
@@ -42,6 +42,7 @@ class BurgerBuilder extends Component{
         const addedPrice = AdditionalPrice[type];
         const newPrice = oldPrice + addedPrice;
         this.setState({totalPrice: newPrice, ingredients: updateIng});
+        this.updateOrderStatus(updateIng);
     }
 
     removeIng = (type) => {
@@ -56,8 +57,8 @@ class BurgerBuilder extends Component{
         const addedPrice = AdditionalPrice[type];
         const newPrice = oldPrice - addedPrice;
         this.setState({totalPrice: newPrice, ingredients: updateIng});
+        this.updateOrderStatus(updateIng);
     }
-
     
 
     render(){
@@ -71,8 +72,9 @@ class BurgerBuilder extends Component{
                 <BuildControls 
                 adding={this.addIng} 
                 removing={this.removeIng}
-                disableInfo={valueCond}/>
-                <h2>totalPrice = {this.state.totalPrice}</h2>
+                disableInfo={valueCond}
+                price={this.state.totalPrice}
+                odrderStat={this.state.orderStatus}/>
             </Auxiliary>
         )
     }
