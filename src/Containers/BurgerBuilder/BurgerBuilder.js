@@ -3,7 +3,7 @@ import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../Components/Burger/Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 import OrderSummary from  '../../Components/Burger/OrderSummary/OrderSummary';
-import Modal from '../../Components/Modal/Modal'
+import Modal from '../../Components/Modal/Modal';
 
 
 const AdditionalPrice = {
@@ -67,6 +67,14 @@ class BurgerBuilder extends Component{
         this.setState({purchasingStatus: true});
     }
 
+    cancelledButtonHandler = () =>{
+        this.setState({purchasingStatus: false});
+    }
+
+    continueButtonHandler = () =>{
+        alert('Continued Clicked');
+    }
+
     render(){
         const valueCond = {...this.state.ingredients};
         for (let key in valueCond){
@@ -75,7 +83,10 @@ class BurgerBuilder extends Component{
         return(
             <Auxiliary>
                 <Modal show={this.state.purchasingStatus}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                    <OrderSummary 
+                    ingredients={this.state.ingredients}
+                    cancelled={this.cancelledButtonHandler}
+                    continued={this.continueButtonHandler}/>
                 </Modal>
                 <Burger ingredients= {this.state.ingredients}/>
                 <BuildControls 
