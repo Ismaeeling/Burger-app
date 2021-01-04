@@ -22,7 +22,8 @@ class BurgerBuilder extends Component{
             bacon:0
         },
         totalPrice: 4,
-        orderStatus: false
+        orderStatus: false,
+        purchasingStatus: false
     }
 
     updateOrderStatus (ingredients) {
@@ -62,6 +63,9 @@ class BurgerBuilder extends Component{
         this.updateOrderStatus(updateIng);
     }
     
+    orderSummaryHandler = () =>{
+        this.setState({purchasingStatus: true});
+    }
 
     render(){
         const valueCond = {...this.state.ingredients};
@@ -70,14 +74,17 @@ class BurgerBuilder extends Component{
         }
         return(
             <Auxiliary>
-                <Modal><OrderSummary ingredients={this.state.ingredients}/></Modal>
+                <Modal show={this.state.purchasingStatus}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients= {this.state.ingredients}/>
                 <BuildControls 
                 adding={this.addIng} 
                 removing={this.removeIng}
                 disableInfo={valueCond}
                 price={this.state.totalPrice}
-                odrderStat={this.state.orderStatus}/>
+                odrderStat={this.state.orderStatus}
+                clicked={this.orderSummaryHandler}/>
             </Auxiliary>
         )
     }
