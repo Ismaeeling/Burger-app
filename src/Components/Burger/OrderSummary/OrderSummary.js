@@ -10,7 +10,7 @@ const orderSummary = (props) =>{
     return(
         <Auxiliary>
             {orderSummaryObjects}
-            <p>Total Price: <storng>{props.price.toFixed(2)}</storng></p>
+            <p>Total Price: <b>{props.price.toFixed(2)}</b></p>
             <Button btnType="Danger" clicked={props.cancelled}>Cancel</Button>
             <Button btnType="Success" clicked={props.continued}>Continue</Button>
         </Auxiliary>

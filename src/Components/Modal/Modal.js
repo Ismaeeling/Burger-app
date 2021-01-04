@@ -13,7 +13,7 @@ const modal = (props) =>{
             }}>
                 {props.children}
             </div>
-            <Backdrop show={props.show}/>
+            <Backdrop show={props.show} clicked={props.backClicked}/>
         </Auxiliary>
     )
 }
